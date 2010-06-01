@@ -20,7 +20,7 @@ Adds the ID of the current blog/site to the Site Admin submenu, links to Edit Bl
 
 == Screenshots ==
 
-1. 
+1. in WP3.0
 
 == Changelog ==
 
