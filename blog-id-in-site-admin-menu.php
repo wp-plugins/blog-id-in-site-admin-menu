@@ -56,5 +56,3 @@ function blog_id_in_howdy_greeting($links) {
 
 	return $links;
 }
-
-?>
