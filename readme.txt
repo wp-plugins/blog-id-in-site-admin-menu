@@ -3,7 +3,7 @@ Contributors: trepmal
 Donate link: http://kaileylampert.com/donate.php
 Tags: wpmu, multi-site
 Requires at least: 2.8
-Tested up to: 3.0
+Tested up to: 3.2-beta2
 Stable tag: trunk
 
 Adds the ID of the current blog/site to the Site Admin submenu and Howdy greeting, links to Edit Blog/Site screen. 
@@ -26,6 +26,9 @@ For superadmins, the number is a link to the Edit Blog/Site screen. For normal a
 2. 
 
 == Changelog ==
+
+= 1.5 =
+* 3.1 compatibility (about time!)
 
 = 1.3 =
 * works for wpmu 2.9 and wp 3.0 (for the sake of my sanity...)
