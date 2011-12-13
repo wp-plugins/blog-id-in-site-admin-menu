@@ -4,7 +4,7 @@ Plugin Name: Blog ID in Site Admin Menu
 Plugin URI: http://trepmal.com/plugins/wordpress-mu-making-the-blog-id-more-convenient/
 Description: Add Blog/Site ID to the Site Admin submenu as a link to the Edit Blog/Site screen.
 Author: Kailey Lampert
-Version: 1.6
+Version: 1.7
 Author URI: http://kaileylampert.com
 */
 /*
@@ -24,44 +24,57 @@ Author URI: http://kaileylampert.com
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 if ( is_multisite() ) {
-	add_action('admin_menu', 'blog_id_in_site_admin_menu');
-	add_filter('admin_user_info_links','blog_id_in_howdy_greeting');
+	add_action( 'admin_menu', 'blog_id_in_site_admin_menu' );
+	if ( function_exists( 'wp_editor' ) ) //3.3
+		add_filter( 'admin_bar_menu', 'blog_id_in_site_menu', 200 );
+	else
+		add_filter( 'admin_user_info_links', 'blog_id_in_howdy_greeting' );
 }
 else {
-	add_action('admin_notices', 'blog_id_not_multisite');
+	add_action( 'admin_notices', 'blog_id_not_multisite' );
 }
 
 function blog_id_in_site_admin_menu(){
 	global $blog_id;
 
 	if ( function_exists( 'is_network_admin' ) ) { //3.1
-		add_submenu_page('index.php', 'Site ID: ' . $blog_id, 'Site ID: ' . $blog_id, 'administrator', network_admin_url( 'site-info.php?id=' . $blog_id ) );
+		add_submenu_page('index.php', "Site ID:  $blog_id", "Site ID: $blog_id", 'administrator', network_admin_url( "site-info.php?id=$blog_id" ) );
 	}
 	elseif ( function_exists( 'is_super_admin' ) ) { //2.9-3.0
-		add_submenu_page('ms-admin.php', 'Site ID: ' . $blog_id, 'Site ID: ' . $blog_id, 'administrator',' /ms-sites.php?action=editblog&id=' . $blog_id );
+		add_submenu_page('ms-admin.php', "Site ID: $blog_id", "Site ID: $blog_id", 'administrator',' /ms-sites.php?action=editblog&id=' . $blog_id );
 	}
 	elseif ( function_exists( 'is_site_admin' ) ) { //2.9mu
-		add_submenu_page('wpmu-admin.php', 'Blog ID: ' . $blog_id, 'Blog ID: ' . $blog_id, 'administrator', '/wpmu-blogs.php?action=editblog&id=' . $blog_id );
+		add_submenu_page('wpmu-admin.php', "Blog ID: $blog_id", "Blog ID: $blog_id", 'administrator', '/wpmu-blogs.php?action=editblog&id=' . $blog_id );
 	}
 }
 		
 function blog_id_in_howdy_greeting($links) {
 	global $blog_id;
 	
-	if ( function_exists( 'is_network_admin' ) ) {
-		if ( is_super_admin() ) //3.1
-			$links[] = ' | <a href="'. network_admin_url( 'site-info.php?id=' . $blog_id ) . '">Site ID: ' . $blog_id . '</a>';
+	if ( function_exists( 'is_network_admin' ) ) { //3.1
+		if ( is_super_admin() )
+			$links[] = ' | <a href="'. network_admin_url( "site-info.php?id=$blog_id" ) . "\">Site ID: $blog_id</a>";
 		else
 			$links[] = ' | Site ID: ' . $blog_id;
 	}
-	elseif ( function_exists( 'is_super_admin' ) ) {
-		if ( is_super_admin() ) //2.9-3.0
-			$links[] = ' | <a href="/wp-admin/ms-sites.php?action=editblog&id=' . $blog_id . '">Site ID: ' . $blog_id . '</a>';
+	elseif ( function_exists( 'is_super_admin' ) ) { //2.9-3.0
+		if ( is_super_admin() )
+			$links[] = " | <a href='/wp-admin/ms-sites.php?action=editblog&id=$blog_id'>Site ID: $blog_id</a>";
 		else
 			$links[] = ' | Site ID: ' . $blog_id;
 	}
 
 	return $links;
+}
+function blog_id_in_site_menu( $wp_admin_bar ) {
+	global $blog_id;
+	$edit_url = network_admin_url( "site-info.php?id=$blog_id");
+	$wp_admin_bar->add_node( array(
+		'id'     => 'site-id',
+		'parent' => 'site-name',
+		'title'  => "Site ID: $blog_id",
+		'href'   => $edit_url,
+	) );
 }
 function blog_id_not_multisite() {
 	?>
