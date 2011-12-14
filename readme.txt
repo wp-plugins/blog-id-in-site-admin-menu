@@ -29,6 +29,9 @@ For superadmins, the number is a link to the Edit Blog/Site screen. For normal a
 
 == Changelog ==
 
+= 1.7.1 =
+* make sure "Site ID" isn't clickable for regular admins
+
 = 1.7 =
 * 3.3 compatibility, ID under Site Name menu
 

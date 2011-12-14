@@ -4,7 +4,7 @@ Plugin Name: Blog ID in Site Admin Menu
 Plugin URI: http://trepmal.com/plugins/wordpress-mu-making-the-blog-id-more-convenient/
 Description: Add Blog/Site ID to the Site Admin submenu as a link to the Edit Blog/Site screen.
 Author: Kailey Lampert
-Version: 1.7
+Version: 1.7.1
 Author URI: http://kaileylampert.com
 */
 /*
@@ -69,12 +69,14 @@ function blog_id_in_howdy_greeting($links) {
 function blog_id_in_site_menu( $wp_admin_bar ) {
 	global $blog_id;
 	$edit_url = network_admin_url( "site-info.php?id=$blog_id");
-	$wp_admin_bar->add_node( array(
+	$node = array(
 		'id'     => 'site-id',
 		'parent' => 'site-name',
 		'title'  => "Site ID: $blog_id",
 		'href'   => $edit_url,
-	) );
+	);
+	if ( ! is_super_admin() ) unset($node['href']);
+	$wp_admin_bar->add_node( $node );
 }
 function blog_id_not_multisite() {
 	?>
