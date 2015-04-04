@@ -1,33 +1,33 @@
 === Blog ID in Site Admin Menu ===
-Contributors: trepmal 
+Contributors: trepmal
 Donate link: http://kaileylampert.com/donate.php
 Tags: wpmu, multi-site
-Requires at least: 2.8
-Tested up to: 3.3
+Requires at least: 4.0
+Tested up to: 4.2
 Stable tag: trunk
 
-Adds the ID of the current blog/site to the Site Admin submenu and Howdy greeting, links to Edit Blog/Site screen. 
+Adds the ID of the current blog/site to the Edit Site menu item.
 
 == Description ==
 
-Adds the ID of the current blog/site to the Site Admin submenu and Howdy greeting, links to Edit Blog/Site screen. 
-
-For superadmins, the number is a link to the Edit Blog/Site screen. For normal admins, the number is visible, but not clickable.
+Adds the ID of the current blog/site to the Edit Site menu item. Available only to super-admins.
 
 == Installation ==
 
-1. Upload `blog-id-in-side-admin-menu.php` to the `/wp-content/plugins/` directory (mu-plugins for WPmu)
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. That's it
+1. Standard installation. Disables itself on non-multisite. Works per-site, network-activated, or in mu-plugins.
+
+1. Upload `blog-id-in-side-admin-menu.php` to the `/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress. Network activation recommended, but not required
 
 == Screenshots ==
 
-1. pre-3.1 "Super Admin" menu (moved to Dashboard in 3.1+)
-2. pre-3.2 "Howdy" links
-3. 3.2 "Howdy" dropdown
-4. 3.3 "Site Name" menu
+1. ID added to Edit Site menu item
 
 == Changelog ==
+
+= 2 =
+* Dropping support for old versions of WordPress
+* Rewritten for l10n, simplicity, namespacing
 
 = 1.7.1 =
 * make sure "Site ID" isn't clickable for regular admins
